@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialSphere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        #loginContainer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1877f2, #42a5f5);
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 360px;
+            text-align: center;
+        }
+
+        .login-logo {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .login-logo-text {
+            color: #1877f2;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #1877f2;
+        }
+
+        .login-button {
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-button:hover {
+            background: #166fe5;
+        }
+
+        #mainContainer {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .header-title {
+            color: #1877f2;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .post-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .post-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            resize: none;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-preview {
+            margin: 10px 0;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .preview-pdf {
+            display: none;
+            padding: 10px;
+            background: #f7f7f7;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .post-button {
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .post-button:hover {
+            background: #166fe5;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post-username {
+            font-weight: 600;
+            color: #050505;
+        }
+
+        .post-content {
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+
+        .post-image {
+            max-width: 100%;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .post-pdf {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f7f7f7;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .post-pdf a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="67e00348b6d14_download.jpg" alt="SocialSphere Logo">
+                <span class="login-logo-text">FriendsMeet</span>
+            </div>
+            <input type="text" id="username" class="login-input" placeholder="Username">
+            <input type="password" id="password" class="login-input" placeholder="Password">
+            <button class="login-button">Login</button> <!-- Removed onclick -->
+        </div>
+    </div>
+
+    <div id="mainContainer">
+        <div class="header">
+            <div class="header-logo">
+                <img src="67e00348b6d14_download.jpg" alt="SocialSphere Logo">
+                <div class="header-title">FriendsMeet</div>
+            </div>
+        </div>
+        
+        <div class="post-form">
+            <textarea class="post-input" id="postText" placeholder="What's on your mind?"></textarea>
+            <div class="post-actions">
+                <input type="file" id="fileUpload" accept="image/*,.pdf">
+                <button class="post-button">Post</button> <!-- Removed onclick -->
+            </div>
+            <div class="file-preview">
+                <img id="previewImage" class="preview-image" alt="Image preview">
+                <div id="previewPdf" class="preview-pdf"></div>
+            </div>
+        </div>
+
+        <div id="postsContainer">
+            <!-- Posts will appear here -->
+        </div>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-storage.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCY52SAtLZwAuPCl_g9TVldzqdnYiGSKJ8",
+            authDomain: "meetours-e4d21.firebaseapp.com",
+            projectId: "meetours-e4d21",
+            storageBucket: "meetours-e4d21.appspot.com",
+            messagingSenderId: "806275002280",
+            appId: "1:806275002280:web:088483634c433b4f72f79d",
+            measurementId: "G-2WCQEVW4V2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Hardcoded credentials (for demo)
+        const validUsername = "user";
+        const validPassword = "pass123";
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === validUsername && password === validPassword) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                loadPosts();
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        // File preview
+        const fileUpload = document.getElementById('fileUpload');
+        const previewImage = document.getElementById('previewImage');
+        const previewPdf = document.getElementById('previewPdf');
+
+        fileUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                previewImage.style.display = 'none';
+                previewPdf.style.display = 'none';
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                } else if (file.type === 'application/pdf') {
+                    previewPdf.textContent = `PDF Preview: ${file.name}`;
+                    previewPdf.style.display = 'block';
+                }
+            }
+        });
+
+        // Load posts from Firestore
+        function loadPosts() {
+            const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+            onSnapshot(q, (snapshot) => {
+                const postsContainer = document.getElementById('postsContainer');
+                postsContainer.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const postDiv = document.createElement('div');
+                    postDiv.className = 'post';
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'post-header';
+                    const avatarDiv = document.createElement('div');
+                    avatarDiv.className = 'post-avatar';
+                    const usernameSpan = document.createElement('span');
+                    usernameSpan.className = 'post-username';
+                    usernameSpan.textContent = data.username;
+                    headerDiv.appendChild(avatarDiv);
+                    headerDiv.appendChild(usernameSpan);
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'post-content';
+                    contentDiv.textContent = data.text;
+
+                    postDiv.appendChild(headerDiv);
+                    postDiv.appendChild(contentDiv);
+
+                    if (data.fileUrl) {
+                        if (data.fileType.startsWith('image/')) {
+                            const postImage = document.createElement('img');
+                            postImage.className = 'post-image';
+                            postImage.src = data.fileUrl;
+                            postDiv.appendChild(postImage);
+                        } else if (data.fileType === 'application/pdf') {
+                            const postPdf = document.createElement('div');
+                            postPdf.className = 'post-pdf';
+                            const pdfLink = document.createElement('a');
+                            pdfLink.href = data.fileUrl;
+                            pdfLink.textContent = `View PDF: ${data.fileName}`;
+                            pdfLink.target = '_blank';
+                            postPdf.appendChild(pdfLink);
+                            postDiv.appendChild(postPdf);
+                        }
+                    }
+
+                    postsContainer.appendChild(postDiv);
+                });
+            }, (error) => {
+                console.error("Error loading posts:", error);
+            });
+        }
+
+        // Create post and save to Firebase
+        async function createPost() {
+            const postText = document.getElementById('postText').value;
+            const file = fileUpload.files[0];
+            const username = validUsername;
+
+            if (!postText.trim() && !file) return;
+
+            let fileUrl = '';
+            let fileType = '';
+            let fileName = '';
+
+            if (file) {
+                fileType = file.type;
+                fileName = file.name;
+                const storageRef = ref(storage, `posts/${Date.now()}_${fileName}`);
+                await uploadBytes(storageRef, file);
+                fileUrl = await getDownloadURL(storageRef);
+            }
+
+            try {
+                await addDoc(collection(db, 'posts'), {
+                    username: username,
+                    text: postText,
+                    fileUrl: fileUrl,
+                    fileType: fileType,
+                    fileName: fileName,
+                    timestamp: new Date()
+                });
+                console.log("Post successfully added to Firestore");
+            } catch (error) {
+                console.error("Error adding post to Firestore:", error);
+            }
+
+            // Reset form
+            document.getElementById('postText').value = '';
+            fileUpload.value = '';
+            previewImage.style.display = 'none';
+            previewPdf.style.display = 'none';
+            previewImage.src = '';
+            previewPdf.textContent = '';
+        }
+
+        // Add event listeners
+        document.querySelector('.login-button').addEventListener('click', login);
+        document.querySelector('.post-button').addEventListener('click', createPost);
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') login();
+        });
+        document.getElementById('postText').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                createPost();
+            }
+        });
+    </script>
+</body>
+</html>
